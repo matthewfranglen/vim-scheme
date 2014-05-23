@@ -8,10 +8,16 @@ else
   let g:loaded_scheme = 1
 endif
 
-" Execute current motion or visual selection in mit-scheme
+" Ex mode range command
+command! -range Scheme <line1>,<line2>call s:ExecuteRangeInScheme()
 
+" Execute current motion or visual selection in mit-scheme
 nmap <silent> <leader>r :set opfunc=ExecuteMotionInScheme<CR>g@
 vmap <silent> <leader>r :<C-U>call ExecuteMotionInScheme(visualmode(), 1)<CR>
+
+function! s:ExecuteRangeInScheme()
+    call s:ExecuteInScheme(getline(a:firstline || 0, a:lastline || getline("$")))
+endfunction
 
 function! ExecuteMotionInScheme(type, ...)
     let sel_save = &selection
