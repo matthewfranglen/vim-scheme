@@ -38,7 +38,15 @@ function! s:ExecuteInScheme(commands)
     echo 'Evaulating scheme ...'
 
     call s:LoadBuffer()
-    call system('mit-scheme', a:commands)
+
+    " Clear the buffer, loading it put us in it.
+    normal! ggdG
+
+    " Execute the commands and handle newlines in the output
+    let l:raw_output = system('mit-scheme', a:commands)
+    let l:output = split(l:raw_output, '\n')
+    call setline(line('.'), l:output)
+
     call s:ResizeBuffer()
 
     echo 'Scheme evaluation completed ...'
