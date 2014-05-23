@@ -43,7 +43,7 @@ function! s:ExecuteInScheme(commands)
     normal! ggdG
 
     " Execute the commands and handle newlines in the output
-    let l:raw_output = system('mit-scheme', a:commands)
+    let l:raw_output = system('mit-scheme --quiet', a:commands)
     let l:output = split(l:raw_output, '\n')
     call setline(line('.'), l:output)
 
