@@ -15,10 +15,13 @@ command! -range Scheme <line1>,<line2>call s:ExecuteRangeInScheme()
 nmap <silent> <leader>r :set opfunc=ExecuteMotionInScheme<CR>g@
 vmap <silent> <leader>r :<C-U>call ExecuteMotionInScheme(visualmode(), 1)<CR>
 
+" Invoked from ex mode, this accepts a range and interprets it
 function! s:ExecuteRangeInScheme()
     call s:ExecuteInScheme(getline(a:firstline, a:lastline))
 endfunction
 
+" Invoked from normal and visual mode, this accepts a motion and interprets it
+" help :map-operatior
 function! ExecuteMotionInScheme(type, ...)
     let sel_save = &selection
     let &selection = "inclusive"
@@ -40,6 +43,8 @@ function! ExecuteMotionInScheme(type, ...)
     let @@ = reg_save
 endfunction
 
+" Executes the lisp commands and shows the results in a new buffer
+" Commands can be a string or a list
 function! s:ExecuteInScheme(commands)
     echo 'Evaulating scheme ...'
 
@@ -58,13 +63,15 @@ function! s:ExecuteInScheme(commands)
     echo 'Scheme evaluation completed ...'
 endfunction
 
+" Creates or moves to the scheme output buffer
 function! s:LoadBuffer()
     let winnr = bufwinnr('^SCHEME-BUFFER$')
     silent! execute  winnr < 0 ? 'botright new SCHEME-BUFFER' : winnr . 'wincmd w'
     setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
 endfunction
 
-" This resizes to the length of the output, but no more than one third of the screen.
+" This resizes to the vertical height of the scheme output buffer.
+" It will never be more than one third of the screen.
 function! s:ResizeBuffer()
     let one_third = &lines / 3
     let command_size = line('$')
