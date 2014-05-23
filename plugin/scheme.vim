@@ -16,7 +16,7 @@ nmap <silent> <leader>r :set opfunc=ExecuteMotionInScheme<CR>g@
 vmap <silent> <leader>r :<C-U>call ExecuteMotionInScheme(visualmode(), 1)<CR>
 
 function! s:ExecuteRangeInScheme()
-    call s:ExecuteInScheme(getline(a:firstline || 0, a:lastline || getline("$")))
+    call s:ExecuteInScheme(getline(a:firstline, a:lastline))
 endfunction
 
 function! ExecuteMotionInScheme(type, ...)
