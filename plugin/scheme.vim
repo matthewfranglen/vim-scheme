@@ -8,6 +8,10 @@ else
   let g:loaded_scheme = 1
 endif
 
+if !exists('g:scheme_evaluator')
+    let g:scheme_evaluator = 'mit-scheme --quiet'
+endif
+
 " Ex mode range command
 command! -range Scheme <line1>,<line2>call s:ExecuteRangeInScheme()
 
@@ -54,7 +58,7 @@ function! s:ExecuteInScheme(commands)
     normal! ggdG
 
     " Execute the commands and handle newlines in the output
-    let l:raw_output = system('mit-scheme --quiet', a:commands)
+    let l:raw_output = system(g:scheme_evaluator, a:commands)
     let l:output = split(l:raw_output, '\n')
     call setline(line('.'), l:output)
 
