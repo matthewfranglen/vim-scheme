@@ -1,6 +1,6 @@
 " scheme.vim - Shell commands write to a vim buffer
 " Maintainer: Matthew Franglen
-" Version:    0.0.1
+" Version:    0.2
 
 if exists('g:loaded_scheme') || &compatible
   finish
@@ -8,12 +8,16 @@ else
   let g:loaded_scheme = 1
 endif
 
+if !exists('g:scheme_evaluator')
+    let g:scheme_evaluator = 'mit-scheme --quiet'
+endif
+
 " Ex mode range command
 command! -range Scheme <line1>,<line2>call s:ExecuteRangeInScheme()
 
 " Execute current motion or visual selection in mit-scheme
-nmap <silent> <leader>r :set opfunc=ExecuteMotionInScheme<CR>g@
-vmap <silent> <leader>r :<C-U>call ExecuteMotionInScheme(visualmode(), 1)<CR>
+noremap <silent> <Plug>Scheme :set opfunc=ExecuteMotionInScheme<CR>g@
+vnoremap <silent> <Plug>Scheme :<C-U>call ExecuteMotionInScheme(visualmode(), 1)<CR>
 
 " Invoked from ex mode, this accepts a range and interprets it
 function! s:ExecuteRangeInScheme()
@@ -54,7 +58,7 @@ function! s:ExecuteInScheme(commands)
     normal! ggdG
 
     " Execute the commands and handle newlines in the output
-    let l:raw_output = system('mit-scheme --quiet', a:commands)
+    let l:raw_output = system(g:scheme_evaluator, a:commands)
     let l:output = split(l:raw_output, '\n')
     call setline(line('.'), l:output)
 
