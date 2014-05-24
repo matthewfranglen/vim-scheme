@@ -1,6 +1,6 @@
 " scheme.vim - Shell commands write to a vim buffer
 " Maintainer: Matthew Franglen
-" Version:    0.0.1
+" Version:    0.2
 
 if exists('g:loaded_scheme') || &compatible
   finish
