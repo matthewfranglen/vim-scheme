@@ -32,9 +32,11 @@ write it to a file.
 
 ## Commands
 
-<code>:[range] Scheme</code>         Evaluate the provided range as code.
+    :[range] Scheme
+Evaluate the provided range as code.
 
-<code><leader>r<motion></code>       Evaluate the provided motion as code.
+    <leader>r<motion>
+Evaluate the provided motion as code.
 
 ## Configuration
 
