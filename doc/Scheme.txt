@@ -1,0 +1,44 @@
+*Scheme.txt* Evaluate lisp and scheme code easily
+
+Author: Matthew Franglen <http://github.com/matthewfranglen/vim-scheme>
+License: Same terms as Vim itself (see |license|)
+
+This plugin is only available if 'compatible' is not set.
+
+INTRODUCTION                                    *Scheme*
+
+I wrote this because I was working through the SICP questions and wanted an
+easy way to interpret my solutions. This command is optimised to evaluate the
+current file, or a part of the current file.
+
+The evaluation always produces output to a fixed buffer. This buffer will be
+cleared and reused if it already exists. If you want to save the output then
+write it to a file.
+
+COMMANDS
+                                                *:Scheme*
+:[range] Scheme         Evaluate the provided range as code.
+
+<leader>r<motion>       Evaluate the provided motion as code.
+
+CONFIGURATION                                   *Scheme-configuration*
+
+The scheme evaluator can be set:
+
+    let g:scheme_evaluator = 'mit-scheme --quiet'
+
+Setting 'g:loaded_scheme' before the plugin loads will prevent it from loading.
+
+Setting 'b:did_scheme_eval_ftplugin' in a buffer before setting the filetype
+will prevent it from loading for that buffer.
+
+FINAL THOUGHTS
+
+Fundamentally this plugin is just a way of sending text to a shell command on
+standard in. You can have any command in there. Format xml with:
+
+    let g:scheme_evaluator = 'xmllint --format -'
+
+I should use this more...
+
+ vim:tw=78:et:ft=help:norl:
